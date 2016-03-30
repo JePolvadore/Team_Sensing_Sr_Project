@@ -1,0 +1,22 @@
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Enter string to be sent");
+  
+  char rx_byte = 0;
+  String rx_str = "";
+}
+
+void loop() {
+  if (Serial.available() > 0) {    // if is character available (while?)
+    rx_byte = Serial.read();       // get the character
+    
+    if (rx_byte != '\n') {
+      rx_str += rx_byte;            // store character in string
+    }
+    else {                          // termenation charactor (\n) received
+      Serial.println("Sending ");
+      Serial1.println(rx_str, BIN);   // send data string as binary across Serial Port 1
+      rx_str = "";                  // clear the string for reuse
+    }
+  }
+}
