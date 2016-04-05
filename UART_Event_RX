@@ -5,17 +5,19 @@
  * character is detected or the buffer is full.
  *
  *****************************************************/
+#include <memcpy.h>
 #include <UartEvent.h>
+#include <Utils.h>
 
 Uart1Event Event1;
 volatile bool print_flag = false;// flag to indicate rx buffer full
 
-const uint16_t BUFSIZE = Event1.rxBufferSize;// size of internal buffer
+const uint16_t BUFSIZE = 4; //Event1.rxBufferSize;// size of internal buffer
 char buffer[BUFSIZE + 1]; // user variable to hold incoming data
 
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
-    Serial.begin(0);
+    Serial.begin(9600);
     while (!Serial);
     delay(100);
     //--------------------------Uart1Event Configuration--------------------------------
