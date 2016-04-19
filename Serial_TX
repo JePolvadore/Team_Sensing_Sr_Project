@@ -3,20 +3,21 @@ char rx_byte = 0;
 boolean stringComplete = false;
 
 void setup() {
-  Serial.begin(9600);   // COM6
+  Serial.begin(9600); 
   Serial1.begin(9600);
   while(!Serial);
-  rx_str.reserve(4);    // reserve 4 bytes for string
+  rx_str.reserve(60);    // reserve 4 bytes for string
+  Serial.println("Enter string to be sent");
 }
 
 void loop() {
-  Serial.println("Enter string to be sent");
   delay(1000);
   
   if (stringComplete) {          // if string is full
     Serial.println("Sending ");
     Serial1.println(rx_str);     // send data string as binary across Serial Port 1
     rx_str = "";                 // clear the string for reuse
+    Serial.println("Enter string to be sent");
     stringComplete = false;      // clear flag
   }
 }
@@ -25,7 +26,7 @@ void serialEvent() {
   while(Serial.available()) {
     rx_byte = (char)Serial.read();
     rx_str += rx_byte;
-    if(rx_str.length() == 4) {
+    if(rx_str.length() == 60) {
       stringComplete = true;
     }
   }
