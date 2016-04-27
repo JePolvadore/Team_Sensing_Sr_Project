@@ -1,0 +1,43 @@
+/***********************************
+/   Abilene Christian University
+/   Senior Design Project 2015/2016
+/
+/   Serial Receiver:
+/     Receive input from serial_1
+/     and output to serial monitor.
+/
+/   Acknowledgments:
+/     Code is based off of example 
+/     code created by Tom Igoe.
+************************************/
+
+String rxString = "";
+char rxByte = 0;
+int bufSize = 1000; 
+bool stringComplete = false;
+
+void setup() {
+  Serial.begin(9600);
+  Serial1.begin(9600);
+  while(!Serial);
+  delay(100);
+  rxString.reserve(bufSize);
+  Serial.println("Ready to receive");
+}
+
+void loop() {
+  while(Serial1.available()) {
+    rxByte = (char)Serial1.read();
+    rxString += rxByte;
+    if(rxString.length() == bufSize) {
+      stringComplete = true;
+    }
+  }
+  if(stringComplete) {
+    Serial.print("Incoming data: ");
+    Serial.println(rxString);
+    Serial.println("Ready to receive");
+    rxString = "";
+    stringComplete = false;
+  }
+}
