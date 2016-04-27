@@ -1,12 +1,23 @@
-String rx_str = "";
-char rx_byte = 0;
+/***********************************
+/   Serial Transmitter
+/   Abilene Christian University
+/   Senior Design Project 2015/2016
+/
+/   Acknowledgments:
+/     Code is based off of example 
+/     code created by Tom Igoe.
+************************************/
+
+String tx_str = "";
+char tx_byte = 0;
 boolean stringComplete = false;
+#define bufferSize 60
 
 void setup() {
   Serial.begin(9600); 
   Serial1.begin(9600);
   while(!Serial);
-  rx_str.reserve(60);    // reserve 4 bytes for string
+  rx_str.reserve(bufferSize);    // reserve bytes for string
   Serial.println("Enter string to be sent");
 }
 
@@ -26,7 +37,7 @@ void serialEvent() {
   while(Serial.available()) {
     rx_byte = (char)Serial.read();
     rx_str += rx_byte;
-    if(rx_str.length() == 60) {
+    if(rx_str.length() == bufferSize) {
       stringComplete = true;
     }
   }
