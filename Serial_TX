@@ -11,36 +11,34 @@
 /     code created by Tom Igoe.
 ************************************/
 
-String tx_str = "";
-char tx_byte = 0;
+String txString = "";
+char txByte;
 boolean stringComplete = false;
-#define bufSize 60
+#define bufSize 60;
 
 void setup() {
   Serial.begin(9600); 
   Serial1.begin(9600);
   while(!Serial);
-  rx_str.reserve(bufSize);    // reserve bytes for string
+  txString.reserve(bufSize);      // reserve bytes for string
   Serial.println("Enter string to be sent");
 }
 
 void loop() {
-  delay(1000);
-  
-  if (stringComplete) {          // if string is full
+  if(stringComplete) {            // if string is full
     Serial.println("Sending ");
-    Serial1.println(rx_str);     // send data string as binary across Serial Port 1
-    rx_str = "";                 // clear the string for reuse
+    Serial1.println(txString);    // send data string as binary across Serial Port 1
     Serial.println("Enter string to be sent");
-    stringComplete = false;      // clear flag
+    txString = "";                // clear the string for reuse
+    stringComplete = false;       // clear flag
   }
 }
 
 void serialEvent() {
   while(Serial.available()) {
-    rx_byte = (char)Serial.read();
-    rx_str += rx_byte;
-    if(rx_str.length() == bufSize) {
+    txByte = (char)Serial.read();
+    txString += txByte;
+    if(txString.length() == bufSize) {
       stringComplete = true;
     }
   }
