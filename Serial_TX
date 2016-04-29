@@ -1,14 +1,14 @@
 /***********************************
-/   Abilene Christian University
-/   Senior Design Project 2015/2016
-/   
-/   Serial Transmitter:
-/     Receive input from serial monitor
-/     and output to serial_1.
-/
-/   Acknowledgments:
-/     Code is based off of example 
-/     code created by Tom Igoe.
+*   Abilene Christian University
+*   Senior Design Project 2015/2016
+*   
+*   Serial Transmitter:
+*     Receive input from serial monitor
+*     and output to serial_1.
+*
+*   Acknowledgments:
+*     Code is based off of example 
+*     code created by Tom Igoe.
 ************************************/
 
 String txString = "";
