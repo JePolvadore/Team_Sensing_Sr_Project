@@ -5,23 +5,21 @@
  * character is detected or the buffer is full.
  *
  *****************************************************/
-#include <memcpy.h>
 #include <UartEvent.h>
-#include <Utils.h>
 
 Uart1Event Event1;
 volatile bool print_flag = false;// flag to indicate rx buffer full
 
-const uint16_t BUFSIZE = 4; //Event1.rxBufferSize;// size of internal buffer
+const uint16_t BUFSIZE = Event1.rxBufferSize;// size of internal buffer
 char buffer[BUFSIZE + 1]; // user variable to hold incoming data
 
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
-    Serial.begin(9600);
+    Serial.begin(0);
     while (!Serial);
     delay(100);
     //--------------------------Uart1Event Configuration--------------------------------
-    Event1.loopBack = false;              // internal loopback set / "default = false"
+    Event1.loopBack = true;              // internal loopback set / "default = false"
     Event1.txEventHandler = tx1Event;    // event handler Serial1 TX
     Event1.rxEventHandler = rx1Event;    // event handler Serial1 RX
     Event1.rxTermCharacterTrigger = '\n';// this termination character will fire the RX event handler
@@ -33,7 +31,7 @@ void setup() {
 void loop() {
     if (Serial.available()) {     // if serial data is available
         char c = Serial.read();   // read and store as 'c'
-        Event1.print(c);          // print 'c' to Event1
+        Event1.print(c);          // store 'c' in Event1
     }
     
     if (print_flag) {             // if rx buffer is full
